@@ -1,0 +1,33 @@
+Mirai
+ip 10.10.10.48
+=>nmap scan reveals three ports
+80 which is sayed to be blocked in description
+53 on tcp port which means dnsmasq has zone transfers possible
+22 ssh 
+=>niktio scan reveals nothing much
+=>directory search reveals two directories one is /version && /admin
+=>after using searchsploit on 80 whih has lighttpd server there is no interesting vulnerabilites
+=>after using searchsploit on ssh we found no possible exploit
+=>after running searchsploit on dnsmasq we found 6 exploit but all are based on dos so nothing important
+=> lets browse 10.10.10.48 it is not blocked but there is nothing important also a blank page
+=> since dns is on tcp lets try to dig 
+dig @10.10.10.48
+we got some info lets try for zone transfer
+dig axfr @10.10.10.48 sample 
+no zone transfer
+=>lets try to browser admin page it has pi-hole 3.x and now searchsploiting it no exloit is available
+=>on admin we got to know that pi-hole generate random password we can change it installing and reconfiguring it
+=>since no default credientials but we have hint naming pi
+=>since mirai is honeypot and pi is rasperbery pi hardware hint
+=>ssh pi@10.10.10.48 default password of reaspbery
+=>we got into ssh
+=>lets check for permission sudo -l we can se its has all permission lets get to rot then sudo su -
+=>now cat /pi/Desktop/user.txt
+=>now go to /root/
+=> cat root.txt it says lost may be in usb stick
+=>df for all disk free space now coomand mount we can see /dev/sdb has /mount/usbstick lets cd into it
+=>after cd we can see damni.txt and lost+found cat danmi.txt we see we have lost it now cat to lost+found there is nothing
+=>so for recovering we can use strings /dev/sdb we can get the hash || grep -a '[a-z0-9]\{32\}' /dev/sdb || xxd /dev/sdb | grep -v "0000 ...." 
+
+
+
