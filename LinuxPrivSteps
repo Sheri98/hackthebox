@@ -4,3 +4,4 @@ LinuxExplloitSuggester.sh[uname kernel version]
 history files and config files ==> mysql database
 pspy64s for cron jobs
 file / -perm -4000 2>/dev/null[to check ]
+Check gtfpbins for any priv esc 
